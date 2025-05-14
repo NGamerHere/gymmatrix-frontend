@@ -23,7 +23,8 @@ export default defineComponent({
         withCredentials: true
       }).then((response) => {
         localStorage.setItem("token", response.data.token);
-        this.$router.push({ name: 'Dashboard' }); 
+        localStorage.setItem("gym_id", response.data.gym_id);
+        this.$router.push({ name: 'Dashboard' });
       }).catch((error) => {
         console.log(error);
       });
