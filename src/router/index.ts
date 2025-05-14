@@ -1,5 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import DashboardLayout from '@/layouts/DashboardLayout.vue'
+import DashboardView from '@/views/Dashboard.vue'
+import CustomersView from '@/views/CustomersView.vue'
+import MembershipsView from '@/views/MembershipsView.vue'
+import SettingsView from '@/views/SettingsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,9 +24,26 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue'),
     },{
       path: '/dashboard',
-      name: 'Dashboard',
-      component: () => import('../views/Dashboard.vue'),
-    },
+      component: DashboardLayout,
+      children: [
+        {
+          path: '',
+          component: DashboardView,
+        },
+        {
+          path: 'customers',
+          component: CustomersView,
+        },
+        {
+          path: 'memberships',
+          component: MembershipsView,
+        },
+        {
+          path: 'settings',
+          component: SettingsView,
+        },
+      ],
+    }
   ],
 })
 
