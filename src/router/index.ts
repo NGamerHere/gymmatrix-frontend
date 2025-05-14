@@ -2,9 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import DashboardLayout from '@/layouts/DashboardLayout.vue'
 import DashboardView from '@/views/Dashboard.vue'
-import CustomersView from '@/views/CustomersView.vue'
+import MemberView from '@/views/adminDashboard/member/MemberView.vue'
 import MembershipsView from '@/views/MembershipsView.vue'
 import SettingsView from '@/views/SettingsView.vue'
+import EditingMember from '@/views/adminDashboard/member/EditingMember.vue'
+import AddingNewMember from '@/views/adminDashboard/member/AddingNewMember.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,10 +32,22 @@ const router = createRouter({
         {
           path: '',
           component: DashboardView,
-        },
-        {
-          path: 'customers',
-          component: CustomersView,
+        },{
+          path:"member",
+          name: 'member',
+          children :[
+            {
+              path:'',
+              component: MemberView,
+            },
+            {
+               path:'new',
+              component:AddingNewMember
+            },{
+              path: 'edit/:member_id',
+              component: EditingMember,
+            }
+          ]
         },
         {
           path: 'memberships',

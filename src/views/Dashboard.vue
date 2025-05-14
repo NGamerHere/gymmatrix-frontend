@@ -32,7 +32,7 @@ export default defineComponent({
   },
   mounted() {
     axiosInstance
-      .get<StatsResponse>('admin/1/dashboard')
+      .get<StatsResponse>('/dashboard')
       .then((res) => {
         this.stats.totalCustomers = res.data.totalMembers
         this.stats.activeMembers = res.data.totalActiveMembers
