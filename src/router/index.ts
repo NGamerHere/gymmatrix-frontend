@@ -31,6 +31,7 @@ const router = createRouter({
       children: [
         {
           path: '',
+          name: 'DashboardHome',
           component: DashboardView,
         },{
           path:"member",
@@ -38,6 +39,7 @@ const router = createRouter({
           children :[
             {
               path:'',
+              name: 'memberHome',
               component: MemberView,
             },
             {

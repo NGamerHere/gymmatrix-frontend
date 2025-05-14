@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+import axiosInstance from '@/services/axiosInstance.ts'
 
 export default defineComponent({
   name: 'AddingNewMember',
@@ -15,16 +16,12 @@ export default defineComponent({
       city: '',
       state: '',
       country: '',
-      zip: '',
-      gymId: null,
+      zip: ''
     };
-  },
-  mounted() {
-
   },
   methods: {
     handleSubmit() {
-      // In a real application, you would send this data to your backend
+
       console.log('Form Data:', {
         name: this.name,
         password: this.password,
@@ -37,33 +34,47 @@ export default defineComponent({
         state: this.state,
         country: this.country,
         zip: this.zip,
-        gymId: this.gymId,
       });
-      // You would typically use axios or fetch here to make an API call
-      // Example:
-      // axios.post('/api/members', { ...this.$data }).then(response => {
-      //   // Handle success (e.g., show a message, redirect)
-      // }).catch(error => {
-      //   // Handle error (e.g., show an error message)
-      // });
+      axiosInstance.post<{
+        message:string,
+        id:number
+      }>("/member",{
+        name: this.name,
+        password: this.password,
+        email: this.email,
+        phone: this.phone,
+        gender: this.gender,
+        age: this.age,
+        address: this.address,
+        city: this.city,
+        state: this.state,
+        country: this.country,
+        zip: this.zip,
+      },(res)=>{
+          console.log(res.data);
+      }).catch((e)=>{
+          console.error("unable to add the error : "+e);
+      });
+
     },
   },
 });
 </script>
 
 <template>
-  <form class="bg-white dark:bg-gray-800 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
-    <h2 class="block text-gray-700 dark:text-gray-200 text-xl font-bold mb-6">
+  <form class="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 max-w-4xl mx-auto">
+    <h2 class="text-xl font-semibold text-center text-gray-700 dark:text-gray-200 mb-6">
       Member Information
     </h2>
 
+    <!-- Name -->
     <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="name">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="name">
         Name
       </label>
       <input
         v-model="name"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="name"
         type="text"
         placeholder="Enter your full name"
@@ -71,13 +82,14 @@ export default defineComponent({
       />
     </div>
 
+    <!-- Email -->
     <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="email">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="email">
         Email
       </label>
       <input
         v-model="email"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="email"
         type="email"
         placeholder="Enter your email address"
@@ -85,26 +97,28 @@ export default defineComponent({
       />
     </div>
 
+    <!-- Phone -->
     <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="phone">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="phone">
         Phone
       </label>
       <input
         v-model="phone"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="phone"
         type="tel"
         placeholder="Enter your phone number"
       />
     </div>
 
+    <!-- Gender -->
     <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="gender">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="gender">
         Gender
       </label>
       <select
         v-model="gender"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="gender"
       >
         <option value="" disabled>Select Gender</option>
@@ -114,91 +128,98 @@ export default defineComponent({
       </select>
     </div>
 
+    <!-- Age -->
     <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="age">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="age">
         Age
       </label>
       <input
         v-model="age"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="age"
         type="number"
         placeholder="Enter your age"
       />
     </div>
 
+    <!-- Address -->
     <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="address">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="address">
         Address
       </label>
       <input
         v-model="address"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="address"
         type="text"
         placeholder="Enter your address"
       />
     </div>
 
+    <!-- City -->
     <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="city">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="city">
         City
       </label>
       <input
         v-model="city"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="city"
         type="text"
         placeholder="Enter your city"
       />
     </div>
 
+    <!-- State -->
     <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="state">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="state">
         State
       </label>
       <input
         v-model="state"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="state"
         type="text"
         placeholder="Enter your state"
       />
     </div>
 
+    <!-- Country -->
     <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="country">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="country">
         Country
       </label>
       <input
         v-model="country"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="country"
         type="text"
         placeholder="Enter your country"
       />
     </div>
 
+    <!-- Zip Code -->
     <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="zip">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="zip">
         Zip Code
       </label>
       <input
         v-model="zip"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="zip"
         type="text"
         placeholder="Enter your zip code"
       />
     </div>
 
-    <div class="mb-4">
-      <label class="block text-gray-700 dark:text-gray-200 text-sm font-bold mb-2" for="password">
+    <!-- Password -->
+    <div class="mb-6">
+      <label class="block text-sm font-bold text-gray-700 dark:text-gray-200 mb-2" for="password">
         Password
       </label>
       <input
         v-model="password"
-        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:text-gray-300 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:border-gray-600"
+        class="w-full px-4 py-2 text-gray-700 dark:text-gray-300 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600"
         id="password"
         type="password"
         placeholder="Enter your password"
@@ -206,9 +227,9 @@ export default defineComponent({
       />
     </div>
 
-    <div class="flex items-center justify-between">
+    <div class="flex justify-center">
       <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
         type="submit"
         @click.prevent="handleSubmit"
       >
@@ -217,5 +238,6 @@ export default defineComponent({
     </div>
   </form>
 </template>
+
 
 <style scoped></style>
