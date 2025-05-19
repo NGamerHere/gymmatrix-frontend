@@ -24,7 +24,8 @@ export default defineComponent({
       }).then((response) => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("gym_id", response.data.gym_id);
-        localStorage.setItem("role", 'admin');
+        localStorage.setItem("user_id",response.data.user_id);
+        localStorage.setItem("role", response.data.role);
         this.$router.push({ name: 'DashboardHome' });
       }).catch((error) => {
         console.log(error);

@@ -17,9 +17,10 @@ axiosInstance.interceptors.request.use(
     }
     const gymId = localStorage.getItem('gym_id');
     const role = localStorage.getItem('role');
-    const url:string= config.url;
-    if (gymId && role) {
-      config.url = `${config.baseURL}/${role}/${gymId}`+url;
+    const userId = localStorage.getItem('user_id');
+    const url:string | undefined  = config.url;
+    if (gymId && role && userId) {
+      config.url = `${config.baseURL}/gym/${gymId}/${role}/${userId}`+url;
     }else{
       const link=document.createElement('a');
       link.href= '/login';

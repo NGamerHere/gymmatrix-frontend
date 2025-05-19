@@ -1,9 +1,9 @@
 // src/shims-vue.d.ts
-import { RouteLocationNormalized } from 'vue-router';
+import { Router, RouteLocationNormalized } from 'vue-router';
 
 declare module '@vue/runtime-core' {
-  // Declare globally available properties for Vue
   interface ComponentCustomProperties {
+    $router: Router; // ✅ This allows using `this.$router.push()`
     $route: RouteLocationNormalized;
   }
 }

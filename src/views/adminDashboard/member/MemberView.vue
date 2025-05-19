@@ -7,15 +7,12 @@ interface Member {
   name: string
   email: string
   planName: string
-  active: boolean
+  status: string
   planDuration: number
 }
 
 export default defineComponent({
   name: 'ManageMembersView',
-  components: {
-    BasePopup
-  },
   data() {
     return {
       members: [] as Member[],
@@ -31,12 +28,15 @@ export default defineComponent({
     }
   },
   mounted() {
-    const gym_id:number=localStorage.getItem('gym_id');
+    const gym_id:number=parseInt(localStorage.getItem('gym_id') || "0" );
+    if(gym_id == 0){
+      console.warn(" invalid Member ID ")
+    }
     if(!gym_id){
       this.$router.push({ name: 'login'});
       return ;
     }
-    axiosInstance.get(`/admin/${gym_id}/member`).then((res)=>{
+    axiosInstance.get(`/member`).then((res)=>{
          this.members=res.data;
     }).catch((e)=>{
       console.error( "Error in fetching the members Details : "+e);
@@ -47,14 +47,15 @@ export default defineComponent({
       this.newMember = { name: '', email: '', plan: '', status: 'Active' }
       this.showAddMemberPopup = true
     },
+    goToAddMember() {
+      this.$router.push({ name:"new-member"});
+    },
     addMember() {
 
       if (!this.newMember.name || !this.newMember.email || !this.newMember.plan) {
         alert('Please fill in all required fields')
         return
       }
-
-      this.members.push({ ...this.newMember })
       this.showAddMemberPopup = false
     },
     confirmDeleteMember(index: number) {
@@ -77,7 +78,7 @@ export default defineComponent({
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-3xl font-bold text-white">Manage Members</h1>
       <button
-        @click="openAddMemberPopup"
+        @click="goToAddMember"
         class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg"
       >
         Add Member
@@ -100,15 +101,16 @@ export default defineComponent({
           <tr v-for="(member, index) in members" :key="index" class="border-t border-gray-200">
             <td class="px-6 py-4">{{ member.name }}</td>
             <td class="px-6 py-4">{{ member.email }}</td>
-            <td class="px-6 py-4">{{ member.planDuration }}</td>
-            <td class="px-6 py-4">
-              <span
-                :class="{
-                    'text-green-600': member.active,
-                    'text-red-600': !member.active,
+            <td class="px-6 py-4">{{ member.planName }} - {{ member.planDuration }}</td>
+            <td class="px-6 py-4 text-center ">
+                <span
+                  :class="{
+                    'text-green-600': member.status == 'ACTIVE' ,
+                    'text-red-600': member.status == 'EXPRIED',
+                    'text-blue-600' :member.status == 'UPCOMING'
                   }"
-              >
-                  {{ member.active ? 'Active' : 'Expired' }}
+                >
+                  {{ member.status }}
                 </span>
             </td>
             <td class="px-6 py-4">
@@ -123,51 +125,6 @@ export default defineComponent({
         </tbody>
       </table>
     </div>
-
-    <!-- Add Member Popup -->
-    <BasePopup
-      :isOpen="showAddMemberPopup"
-      title="Add New Member"
-      confirmButtonText="Save Member"
-      @close="showAddMemberPopup = false"
-      @confirm="addMember"
-    >
-      <div class="grid grid-cols-1 gap-4">
-        <input
-          v-model="newMember.name"
-          type="text"
-          placeholder="Full Name"
-          class="border border-gray-300 p-3 rounded"
-        />
-        <input
-          v-model="newMember.email"
-          type="email"
-          placeholder="Email"
-          class="border border-gray-300 p-3 rounded"
-        />
-        <input
-          v-model="newMember.plan"
-          type="text"
-          placeholder="Membership Plan"
-          class="border border-gray-300 p-3 rounded"
-        />
-        <select v-model="newMember.status" class="border border-gray-300 p-3 rounded">
-          <option value="Active">Active</option>
-          <option value="Expired">Expired</option>
-        </select>
-      </div>
-    </BasePopup>
-
-    <!-- Delete Confirmation Popup -->
-    <BasePopup
-      :isOpen="showDeleteConfirmPopup"
-      title="Confirm Deletion"
-      confirmButtonText="Delete"
-      @close="showDeleteConfirmPopup = false"
-      @confirm="deleteMember"
-    >
-      <p>Are you sure you want to delete this member?</p>
-    </BasePopup>
   </div>
 </template>
 

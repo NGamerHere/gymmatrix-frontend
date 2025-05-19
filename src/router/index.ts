@@ -44,9 +44,11 @@ const router = createRouter({
             },
             {
                path:'new',
+              name:"new-member",
               component:AddingNewMember
             },{
               path: 'edit/:member_id',
+              name:"edit-member",
               component: EditingMember,
             }
           ]

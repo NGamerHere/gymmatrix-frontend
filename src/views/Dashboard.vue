@@ -14,7 +14,7 @@ interface MembersInfo {
   name: string
   planDuration: number
   planName: string
-  active: boolean
+  status: string
 }
 
 export default defineComponent({
@@ -87,7 +87,7 @@ export default defineComponent({
             <tr>
               <th class="px-6 py-3 text-left">Name</th>
               <th class="px-6 py-3 text-left">Membership</th>
-              <th class="px-6 py-3 text-left">Status</th>
+              <th class="px-6 py-3 text-center">Status</th>
               <th class="px-6 py-3 text-left">Actions</th>
             </tr>
           </thead>
@@ -95,14 +95,15 @@ export default defineComponent({
             <tr v-for="(customer, index) in customers" :key="index">
               <td class="px-6 py-4">{{ customer.name }}</td>
               <td class="px-6 py-4">{{ customer.planName }}</td>
-              <td class="px-6 py-4">
+              <td class="px-6 py-4 text-center ">
                 <span
                   :class="{
-                    'text-green-600': customer.active,
-                    'text-red-600': !customer.active,
+                    'text-green-600': customer.status == 'ACTIVE' ,
+                    'text-red-600': customer.status == 'EXPRIED',
+                    'text-blue-600' :customer.status == 'UPCOMING'
                   }"
                 >
-                  {{ customer.active ? 'Active' : 'Expired' }}
+                  {{ customer.status }}
                 </span>
               </td>
 
