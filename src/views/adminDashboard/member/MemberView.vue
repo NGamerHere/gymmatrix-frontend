@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import BasePopup from '@/components/Popup.vue'
 import axiosInstance from '@/services/axiosInstance.ts'
 
 interface Member {
