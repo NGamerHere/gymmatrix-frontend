@@ -29,11 +29,20 @@ export default defineComponent({
     <ul class="space-y-4">
       <li>
         <router-link
+          to="/dashboard/plans"
+          class="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
+          active-class="font-semibold text-indigo-700 dark:text-indigo-400"
+        >
+          Memberships Plans
+        </router-link>
+      </li>
+      <li>
+        <router-link
           to="/dashboard/member"
           class="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
           active-class="font-semibold text-indigo-700 dark:text-indigo-400"
         >
-          Customers
+          Members management
         </router-link>
       </li>
       <li>

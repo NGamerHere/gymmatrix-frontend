@@ -57,11 +57,11 @@ export default defineComponent({
         city: 'New York',
         state: 'NY',
         country: 'USA',
-        zip: '10001',
+        zip: '10001'
       },
       planHistory: [] as PlanHistory[],
       planInfo: [] as PlanInfo[],
-      total_active_membership:0
+      total_active_membership: 0
     }
   },
   mounted() {
@@ -90,31 +90,35 @@ export default defineComponent({
   },
   methods: {
     createMembership() {
-      const memberId = this.$route.params.member_id;
+      const memberId = this.$route.params.member_id
 
       const payload = {
         planId: this.newMembership.planId,
         startDate: new Date(this.newMembership.startDate).toISOString(),
         paymentType: this.newMembership.paymentType,
         refID: this.newMembership.refID,
-        userId: Number(memberId),
-      };
+        userId: Number(memberId)
+      }
 
       axiosInstance
         .post('/memberships', payload)
         .then((res) => {
           console.log(res.data)
-          alert('Membership created successfully');
-          return axiosInstance.get(`/member/${memberId}`);
+          alert('Membership created successfully')
+          this.newMembership.planId = null
+          this.newMembership.startDate = ''
+          this.newMembership.paymentType = ''
+          this.newMembership.refID = ''
+          return axiosInstance.get(`/member/${memberId}`)
         })
         .then((res) => {
-          this.planHistory = res.data.planHistory;
+          this.planHistory = res.data.planHistory
         })
         .catch((err) => {
-          console.error('Error creating membership:', err);
-          console.log(err.response.data.error);
-          alert(err.response.data.error);
-        });
+          console.error('Error creating membership:', err)
+          console.log(err.response.data.error)
+          alert(err.response.data.error)
+        })
     },
     handleSubmit() {
       if (this.isFormValid()) {
@@ -136,8 +140,8 @@ export default defineComponent({
 
     isFormValid() {
       return this.memberInfo.name && this.memberInfo.email && this.memberInfo.age
-    },
-  },
+    }
+  }
 })
 </script>
 
@@ -200,12 +204,21 @@ export default defineComponent({
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Start Date</label>
-            <input v-model="newMembership.startDate" type="date" class="form-input w-full" required />
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Start Date</label
+            >
+            <input
+              v-model="newMembership.startDate"
+              type="date"
+              class="form-input w-full"
+              required
+            />
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Payment Type</label>
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >Payment Type</label
+            >
             <select v-model="newMembership.paymentType" class="form-input w-full" required>
               <option value="" disabled>Select Payment Type</option>
               <option value="cash">Cash</option>
@@ -220,7 +233,10 @@ export default defineComponent({
           </div>
 
           <div class="md:col-span-2">
-            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+            <button
+              type="submit"
+              class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
               Create Membership
             </button>
           </div>

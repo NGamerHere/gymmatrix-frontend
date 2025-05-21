@@ -7,6 +7,7 @@ import MembershipsView from '@/views/MembershipsView.vue'
 import SettingsView from '@/views/SettingsView.vue'
 import EditingMember from '@/views/adminDashboard/member/EditingMember.vue'
 import AddingNewMember from '@/views/adminDashboard/member/AddingNewMember.vue'
+import PlansManagementView from '@/views/adminDashboard/plans/PlansManagementView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,7 +61,11 @@ const router = createRouter({
         {
           path: 'settings',
           component: SettingsView,
-        },
+        },{
+          path:'plans',
+          name:'plans',
+          component: PlansManagementView,
+        }
       ],
     }
   ],
