@@ -9,6 +9,11 @@ export default defineComponent({
       default: false
     }
   },
+  methods: {
+    handleLinkClick() {
+      this.$emit('close');
+    }
+  },
   emits: ['close']
 })
 </script>
@@ -30,6 +35,7 @@ export default defineComponent({
       <li>
         <router-link
           to="/dashboard/plans"
+          @click="$emit('close')"
           class="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
           active-class="font-semibold text-indigo-700 dark:text-indigo-400"
         >
@@ -39,6 +45,7 @@ export default defineComponent({
       <li>
         <router-link
           to="/dashboard/member"
+          @click="$emit('close')"
           class="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
           active-class="font-semibold text-indigo-700 dark:text-indigo-400"
         >
@@ -48,6 +55,7 @@ export default defineComponent({
       <li>
         <router-link
           to="/dashboard/memberships"
+          @click="$emit('close')"
           class="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
           active-class="font-semibold text-indigo-700 dark:text-indigo-400"
         >
@@ -57,6 +65,7 @@ export default defineComponent({
       <li>
         <router-link
           to="/dashboard/settings"
+          @click="$emit('close')"
           class="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
           active-class="font-semibold text-indigo-700 dark:text-indigo-400"
         >

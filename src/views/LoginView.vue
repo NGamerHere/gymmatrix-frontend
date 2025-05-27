@@ -15,7 +15,7 @@ export default defineComponent({
   }),
   methods: {
     loginHandler() {
-      axios.post("http://localhost:8080/api/auth/signin", {
+      axios.post(import.meta.env.VITE_API_URL+"/auth/signin", {
         email: this.email,
         password: this.password,
         role:'admin'
