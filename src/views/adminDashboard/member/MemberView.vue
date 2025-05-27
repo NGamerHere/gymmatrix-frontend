@@ -3,8 +3,13 @@ import { defineComponent } from 'vue'
 import axiosInstance from '@/services/axiosInstance.ts'
 
 interface Member {
+  id:number
   name: string
   email: string
+  phone: string
+  startDate: Date
+  endDate: Date
+  membershipId: number
   planName: string
   status: string
   planDuration: number
@@ -57,9 +62,8 @@ export default defineComponent({
       }
       this.showAddMemberPopup = false
     },
-    confirmDeleteMember(index: number) {
-      this.memberToDeleteIndex = index
-      this.showDeleteConfirmPopup = true
+    navigateToMemberEdit(index: number) {
+      this.$router.push('/dashboard/member/edit/'+index)
     },
     deleteMember() {
       if (this.memberToDeleteIndex >= 0) {
@@ -90,7 +94,7 @@ export default defineComponent({
         <thead class="bg-gray-100">
           <tr>
             <th class="px-6 py-3">Name</th>
-            <th class="px-6 py-3">Email</th>
+            <th class="px-6 py-3">Phone</th>
             <th class="px-6 py-3">Plan</th>
             <th class="px-6 py-3">Status</th>
             <th class="px-6 py-3">Actions</th>
@@ -99,7 +103,7 @@ export default defineComponent({
         <tbody>
           <tr v-for="(member, index) in members" :key="index" class="border-t border-gray-200">
             <td class="px-6 py-4">{{ member.name }}</td>
-            <td class="px-6 py-4">{{ member.email }}</td>
+            <td class="px-6 py-4">{{ member.phone }}</td>
             <td class="px-6 py-4">{{ member.planName }} - {{ member.planDuration }}</td>
             <td class="px-6 py-4 text-center ">
                 <span
@@ -113,8 +117,8 @@ export default defineComponent({
                 </span>
             </td>
             <td class="px-6 py-4">
-              <button @click="confirmDeleteMember(index)" class="text-red-600 hover:underline">
-                Delete
+              <button @click="navigateToMemberEdit(member.id)" class="text-blue-600 hover:underline">
+                Edit
               </button>
             </td>
           </tr>
