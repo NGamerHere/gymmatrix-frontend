@@ -8,6 +8,7 @@ import SettingsView from '@/views/SettingsView.vue'
 import EditingMember from '@/views/adminDashboard/member/EditingMember.vue'
 import AddingNewMember from '@/views/adminDashboard/member/AddingNewMember.vue'
 import PlansManagementView from '@/views/adminDashboard/plans/PlansManagementView.vue'
+import TrainerManagment from '@/views/adminDashboard/trainer/TrainerManagment.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,8 +24,12 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },{
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: () => import('../views/LoginView.vue'),
+    },{
+      path:"/logout",
+      name:'logout',
+      component: () => import('../views/Logout.vue'),
     },{
       path: '/dashboard',
       name: 'Dashboard',
@@ -53,8 +58,17 @@ const router = createRouter({
               component: EditingMember,
             }
           ]
-        },
-        {
+        },{
+          path:"trainer",
+          name:'trainer',
+          children:[
+            {
+              path:'',
+              name: 'trainerHome',
+              component: TrainerManagment,
+            }
+          ]
+        }, {
           path: 'memberships',
           component: MembershipsView,
         },

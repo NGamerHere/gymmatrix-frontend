@@ -78,45 +78,42 @@ export default defineComponent({
       </div>
 
       <!-- Customer Management Section -->
+      <!-- Customer Management Section -->
       <div class="mt-12">
         <h2 class="text-3xl font-semibold text-white mb-6">Customer Management</h2>
-        <table
-          class="min-w-full table-auto text-gray-700 bg-white shadow-md rounded-lg overflow-hidden"
-        >
-          <thead>
-            <tr>
-              <th class="px-6 py-3 text-left">Name</th>
-              <th class="px-6 py-3 text-left">Membership</th>
-              <th class="px-6 py-3 text-center">Status</th>
-              <th class="px-6 py-3 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(customer, index) in customers" :key="index">
-              <td class="px-6 py-4">{{ customer.name }}</td>
-              <td class="px-6 py-4">{{ customer.planName }}</td>
-              <td class="px-6 py-4 text-center ">
-                <span
-                  :class="{
-                    'text-green-600': customer.status == 'ACTIVE' ,
-                    'text-red-600': customer.status == 'EXPRIED',
-                    'text-blue-600' :customer.status == 'UPCOMING'
-                  }"
-                >
-                  {{ customer.status }}
-                </span>
-              </td>
 
-              <td class="px-6 py-4">
-                <button class="text-indigo-600 hover:text-indigo-800">Edit</button>
-                <button class="text-red-600 hover:text-red-800 ml-4">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          <div
+            v-for="(customer, index) in customers"
+            :key="index"
+            class="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between"
+          >
+            <div>
+              <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ customer.name }}</h3>
+              <p class="text-gray-600"><strong>Membership:</strong> {{ customer.planName }}</p>
+              <p class="text-gray-600"><strong>Duration:</strong> {{ customer.planDuration }} months</p>
+              <p class="mt-2">
+          <span
+            :class="{
+              'text-green-600 font-semibold': customer.status === 'ACTIVE',
+              'text-red-600 font-semibold': customer.status === 'EXPRIED',
+              'text-blue-600 font-semibold': customer.status === 'UPCOMING'
+            }"
+          >
+            {{ customer.status }}
+          </span>
+              </p>
+            </div>
+
+            <div class="mt-4 flex justify-end gap-4">
+              <button class="text-indigo-600 hover:text-indigo-800 font-medium">Edit</button>
+              <button class="text-red-600 hover:text-red-800 font-medium">Delete</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+    </div>
 </template>
 
 <style scoped>
