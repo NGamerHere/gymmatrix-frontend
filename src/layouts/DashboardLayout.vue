@@ -24,14 +24,14 @@ export default defineComponent({
 <template>
   <div class="min-h-screen flex bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
     <!-- Sidebar for large screens -->
-    <div class="hidden md:block h-screen">
-      <Sidebar :open="true" />
+    <div class="hidden md:flex md:flex-col md:h-screen">
+      <Sidebar :open="true" class="flex-1" />
     </div>
 
     <!-- Sidebar for mobile screens -->
     <transition name="slide">
       <div v-if="isSidebarOpen" class="fixed inset-0 z-40 flex md:hidden">
-        <div class="fixed inset-0 bg-black opacity-50" @click="isSidebarOpen = false"></div>
+        <div class="fixed inset-0 " @click="isSidebarOpen = false"></div>
         <div class="relative w-64 bg-white dark:bg-gray-900 z-50 h-screen">
           <Sidebar :open="true" @close="isSidebarOpen = false" />
         </div>
