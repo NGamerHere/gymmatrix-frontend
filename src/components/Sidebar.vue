@@ -44,22 +44,32 @@ export default defineComponent({
       </li>
       <li>
         <router-link
+          to="/dashboard/equipments"
+          @click="$emit('close')"
+          class="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
+          active-class="font-semibold text-indigo-700 dark:text-indigo-400"
+        >
+          Equipment Management
+        </router-link>
+      </li>
+      <li>
+        <router-link
+          to="/dashboard/workout"
+          @click="$emit('close')"
+          class="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
+          active-class="font-semibold text-indigo-700 dark:text-indigo-400"
+        >
+          Workout Management
+        </router-link>
+      </li>
+      <li>
+        <router-link
           to="/dashboard/member"
           @click="$emit('close')"
           class="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
           active-class="font-semibold text-indigo-700 dark:text-indigo-400"
         >
           Members management
-        </router-link>
-      </li>
-      <li>
-        <router-link
-          to="/dashboard/memberships"
-          @click="$emit('close')"
-          class="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400"
-          active-class="font-semibold text-indigo-700 dark:text-indigo-400"
-        >
-          Memberships
         </router-link>
       </li>
       <li>

@@ -6,12 +6,13 @@ import settings from '@/router/AdminRoutes/SettingsRoute.ts'
 import Dashboard from '@/router/AdminRoutes/DashboardRoute.ts'
 import Workout from '@/router/AdminRoutes/WorkoutRoute.ts'
 import PlansRoute from '@/router/AdminRoutes/PlansRoute.ts'
+import EquipmentManagerRoute from '@/router/AdminRoutes/EquipmentManagerRoute.ts'
 
 export default {
   path: '/dashboard',
   name: 'Dashboard',
   component: DashboardLayout,
   children: [
-    Dashboard,Member,Trainer, MembershipRoute,settings,Workout,PlansRoute
+    Dashboard,Member,Trainer, MembershipRoute,settings,Workout,PlansRoute,EquipmentManagerRoute
   ],
 }
