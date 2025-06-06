@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { PushNotifications } from '@capacitor/push-notifications'
 
 export default defineComponent({
   name: 'Logout',
@@ -12,6 +13,8 @@ export default defineComponent({
       localStorage.removeItem('gym_id')
       localStorage.removeItem("user_id");
       localStorage.removeItem("role");
+      PushNotifications.removeAllListeners()
+      PushNotifications.unregister()
       router.push({ name: 'Login' })
     })
 

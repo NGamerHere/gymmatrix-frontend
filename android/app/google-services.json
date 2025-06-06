@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "56391158060",
+    "project_id": "gymmatrix-app",
+    "storage_bucket": "gymmatrix-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56391158060:android:3b32f7ccb593b10f684489",
+        "android_client_info": {
+          "package_name": "com.coderstack.gymmatrix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVTWyYzntK9F4KM0BXPM5UDLBwVcwq6Hk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
