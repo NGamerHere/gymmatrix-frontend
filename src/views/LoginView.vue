@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { PushNotifications } from '@capacitor/push-notifications'
+import { LocalNotifications } from '@capacitor/local-notifications';
 import axios from 'axios'
-import axiosInstance from '@/services/axiosInstance.ts'
 
 export default defineComponent({
   name: 'LoginView',
@@ -55,8 +55,19 @@ export default defineComponent({
             )
           })
 
-          PushNotifications.addListener('pushNotificationReceived', (notification) => {
+          PushNotifications.addListener('pushNotificationReceived',async (notification) => {
             console.log('Push received: ', notification)
+            const notificationId = Math.floor(Math.random() * 100000);
+            await LocalNotifications.schedule({
+              notifications: [
+                {
+                  title: notification.title || 'Notification',
+                  body: notification.body || '',
+                  id: notificationId,
+                  schedule: { at: new Date(Date.now() + 100) },
+                },
+              ],
+            });
           })
           this.$router.push({ name: 'DashboardHome' })
         })
