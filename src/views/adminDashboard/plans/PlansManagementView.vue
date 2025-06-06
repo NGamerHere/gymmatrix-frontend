@@ -73,7 +73,12 @@ export default defineComponent({
           this.showModal = false
         })
       } else {
-        axiosInstance.post('/plan', this.currentPlan).then(() => {
+        const form = {
+          plan_name: this.currentPlan.planName,
+          plan_duration: this.currentPlan.planDuration,
+          price: this.currentPlan.price,
+        }
+        axiosInstance.post('/plan', form).then(() => {
           this.fetchPlans()
           this.showModal = false
         })

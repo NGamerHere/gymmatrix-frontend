@@ -10,6 +10,12 @@ export default defineComponent({
     message: '',
     enquirySubmitted: false,
   }),
+  mounted() {
+    const token = localStorage.getItem('token');
+    if(token){
+       this.$router.push("/dashboard");
+    }
+  },
   methods: {
     submitEnquiry() {
       console.log({
@@ -29,9 +35,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <div
-    class="flex flex-col min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white"
-  >
+  <div class="flex flex-col min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
+    <!-- Hero Section -->
     <!-- Hero Section -->
     <section class="flex flex-col items-center justify-center text-center py-24 px-6">
       <h1 class="text-5xl font-bold mb-4">Transform Your Gym Management with GymMatrix</h1>
@@ -39,12 +44,20 @@ export default defineComponent({
         Manage customers, memberships, attendance, and track revenues — all in one beautiful
         platform tailored for gym owners.
       </p>
-      <router-link
-        to="#enquiry"
-        class="bg-white text-indigo-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-200 transition"
-      >
-        Enquire Now
-      </router-link>
+      <div class="flex gap-4 flex-col sm:flex-row">
+        <router-link
+          to="#enquiry"
+          class="bg-white text-indigo-600 font-bold py-3 px-6 rounded-xl hover:bg-gray-200 transition"
+        >
+          Enquire Now
+        </router-link>
+        <router-link
+          to="/login"
+          class="bg-transparent border border-white text-white font-bold py-3 px-6 rounded-xl hover:bg-white hover:text-indigo-600 transition"
+        >
+          Login
+        </router-link>
+      </div>
     </section>
 
     <!-- Features Section -->

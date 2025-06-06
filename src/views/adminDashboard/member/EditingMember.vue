@@ -146,29 +146,29 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="max-w-5xl mx-auto p-6 bg-white dark:bg-gray-800 shadow rounded-lg">
+  <div class="max-w-5xl mx-auto p-6 bg-white text-black dark:bg-gray-800 dark:text-white shadow rounded-lg">
     <!-- Header -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-      <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">Member Information</h2>
-      <button
-        class="px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-        v-if="isReadOnly"
-        @click="isReadOnly = false"
-      >
-        Edit
-      </button>
-      <div class="md:col-span-2 flex gap-3 mt-4" v-else>
-        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-          Save
-        </button>
+        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100">Member Information</h2>
         <button
-          type="button"
-          @click="isReadOnly = true"
-          class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+          class="px-4 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+          v-if="isReadOnly"
+          @click="isReadOnly = false"
         >
-          Cancel
+          Edit
         </button>
-      </div>
+        <div class="md:col-span-2 flex gap-3 mt-4" v-else>
+          <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+            Save
+          </button>
+          <button
+            type="button"
+            @click="isReadOnly = true"
+            class="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+          >
+            Cancel
+          </button>
+        </div>
     </div>
 
     <!-- VIEW MODE -->
