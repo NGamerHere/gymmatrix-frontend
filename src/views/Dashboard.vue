@@ -49,7 +49,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 flex">
+  <div class="min-h-screen  flex">
     <!-- Main Content -->
     <div class="flex-1 p-8 overflow-y-auto">
       <div class="mb-8">

@@ -35,9 +35,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div
-    class="flex flex-col min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white"
-  >
+  <div class="flex flex-col min-h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
     <!-- Hero Section -->
     <!-- Hero Section -->
     <section class="flex flex-col items-center justify-center text-center py-24 px-6">

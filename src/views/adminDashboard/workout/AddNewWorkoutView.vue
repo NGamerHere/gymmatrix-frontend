@@ -398,6 +398,7 @@ export default defineComponent({
     },
     resetForm() {
       this.form = {
+        isTemplate:false,
         routineName: '',
         description: '',
         routineId: '',

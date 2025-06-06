@@ -127,8 +127,11 @@ export default defineComponent({
       }
 
       axiosInstance
-        .post(`/equipment`, formData)
-        .then(() => {
+        .post(`/equipment`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }).then(() => {
           this.fetchEquipments()
           this.form = { equipmentName: '', remarks: '', file: null }
         })
