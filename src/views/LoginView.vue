@@ -1,5 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { PushNotifications } from '@capacitor/push-notifications'
+import { LocalNotifications } from '@capacitor/local-notifications';
 import axios from 'axios'
 
 export default defineComponent({
@@ -15,23 +17,65 @@ export default defineComponent({
   }),
   methods: {
     loginHandler() {
-      axios.post(import.meta.env.VITE_API_URL+"/auth/signin", {
-        email: this.email,
-        password: this.password,
-        role:'admin'
-      },{
-        withCredentials: true
-      }).then((response) => {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("gym_id", response.data.gym_id);
-        localStorage.setItem("user_id",response.data.user_id);
-        localStorage.setItem("role", response.data.role);
-        this.$router.push({ name: 'DashboardHome' });
-      }).catch((error) => {
-        console.log(error);
-      });
-    }
-  }
+      axios
+        .post(
+          import.meta.env.VITE_API_URL + '/auth/signin',
+          {
+            email: this.email,
+            password: this.password,
+            role: 'admin',
+          },
+          {
+            withCredentials: true,
+          },
+        )
+        .then((response) => {
+          localStorage.setItem('token', response.data.token)
+          localStorage.setItem('gym_id', response.data.gym_id)
+          localStorage.setItem('user_id', response.data.user_id)
+          localStorage.setItem('role', response.data.role)
+          PushNotifications.requestPermissions().then((result) => {
+            if (result.receive === 'granted') {
+              PushNotifications.register()
+            }
+          })
+
+          PushNotifications.addListener('registration', async (token) => {
+            console.log('Device registered', token.value)
+            localStorage.setItem('push_token', token.value)
+            await axios.post(
+              import.meta.env.VITE_API_URL +
+                `/gym/${response.data.gym_id}/${response.data.role}/${response.data.user_id}/notification`,
+              { token: token.value },
+              {
+                headers: {
+                  Authorization: `Bearer ${response.data.token}`,
+                },
+              },
+            )
+          })
+
+          PushNotifications.addListener('pushNotificationReceived',async (notification) => {
+            console.log('Push received: ', notification)
+            const notificationId = Math.floor(Math.random() * 100000);
+            await LocalNotifications.schedule({
+              notifications: [
+                {
+                  title: notification.title || 'Notification',
+                  body: notification.body || '',
+                  id: notificationId,
+                  schedule: { at: new Date(Date.now() + 100) },
+                },
+              ],
+            });
+          })
+          this.$router.push({ name: 'DashboardHome' })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+  },
 })
 </script>
 
@@ -69,7 +113,7 @@ export default defineComponent({
             <input type="checkbox" class="form-checkbox" v-model="remember" />
             <span>Remember me</span>
           </label>
-          <a href="#"   class="text-sm text-indigo-500 hover:underline">Forgot Password?</a>
+          <a href="#" class="text-sm text-indigo-500 hover:underline">Forgot Password?</a>
         </div>
 
         <button
